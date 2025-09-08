@@ -8,29 +8,29 @@
     <meta name="keywords" content="自适应, 图标布局">
     <title>下载界面 </title>
     <style>
-        /* 1. 核心修改：禁止页面滚动 + 背景图完全贴紧屏幕 */
+        /* 1. 核心修改：禁止页面滚动 + 背景图自适应屏幕 */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
-            /* 背景图改为 100vw(宽占满屏幕) + 100vh(高占满屏幕)，确保完全贴紧 */
+            /* 背景图自适应设置 */
             background-image: url('tu/2.png');
-            background-size: 100vw 100vh; /* 替换 cover，强制背景图与屏幕尺寸完全一致 */
-            background-position: 0 0; /* 取消居中，强制从屏幕左上角开始对齐 */
+            background-size: cover; /* 保持图片比例，覆盖整个容器 */
+            background-position: center; /* 背景图居中显示，确保关键内容可见 */
             background-repeat: no-repeat;
             background-attachment: fixed;
-            min-height: 100vh; /* 确保 body 至少占满屏幕高度 */
+            height: 100vh; /* 确保 body 占满屏幕高度 */
+            width: 100vw; /* 确保 body 占满屏幕宽度 */
             position: relative;
             box-sizing: border-box;
-            /* 禁止页面滚动（关键属性）：隐藏滚动条 + 禁止内容滚动 */
-            overflow: hidden; 
+            overflow: hidden; /* 禁止页面滚动 */
         }
 
         /* 图标容器样式 - 底部上方20%位置横向分布 */
         .icons-container {
             position: absolute;
-            bottom: 25%; /* 底部上方25%的位置（原20%，可根据需求调整） */
+            bottom: 25%; /* 底部上方25%的位置 */
             left: 0;
             right: 0;
             display: flex;
@@ -61,7 +61,7 @@
 
         .icons-container img:hover {
             opacity: 0.7;
-            transform: scale(1.1); /* 悬停放大效果，正常生效 */
+            transform: scale(1.1); /* 悬停放大效果 */
         }
 
         /* 右上角链接容器 */
@@ -80,7 +80,7 @@
             position: absolute;
             bottom: 8%;
             right: 5%;
-            animation: float 2s ease-in-out infinite; /* 浮动动画正常生效 */
+            animation: float 2s ease-in-out infinite; /* 浮动动画 */
         }
 
         /* 图片链接通用样式 */
@@ -96,9 +96,9 @@
             border-radius: 8px;
         }
 
-        /* 修复悬停缩放异常：原 scale(-20.05) 是错误值（负号会翻转+过度放大），改为正常放大 */
+        /* 悬停效果 */
         .image-link:hover {
-            transform: scale(1.05); /* 改为轻微放大，避免布局错乱 */
+            transform: scale(1.05);
             filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
         }
 
@@ -116,32 +116,32 @@
         @media (max-width: 768px) {
             .top-links {
                 gap: 10px;
-                max-width: 60%; /* 小屏幕上右上角链接容器占比更大，避免拥挤 */
+                max-width: 60%;
             }
             .bottom-link {
                 bottom: 5%;
                 right: 5%;
             }
             .bottom-link img {
-                width: 100px !important; /* 小屏幕客服图标缩小 */
+                width: 100px !important;
             }
         }
 
         @media (min-width: 1200px) {
             .top-links {
-                gap: 20px; /* 大屏幕上右上角链接间距更大 */
+                gap: 20px;
             }
             .image-link img {
-                min-width: 100px; /* 大屏幕上链接图片最小宽度限制 */
+                min-width: 100px;
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- 右上角链接容器（若需要添加链接，可在此处补充 <a> 标签） -->
+    <!-- 右上角链接容器 -->
     <div class="top-links">
-        <!-- 示例：可添加类似下方的链接 -->
+        <!-- 可添加链接 -->
         <!-- <a href="xxx.html" class="image-link"><img src="tu/xxx.png" alt="链接1"></a> -->
         <!-- <a href="xxx.html" class="image-link"><img src="tu/xxx.png" alt="链接2"></a> -->
     </div>

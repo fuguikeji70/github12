@@ -4,55 +4,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="自适应图标页面">
-    <meta name="keywords" content="自适应, 图标布局">
-    <title>下载界面 </title>
+    <meta name="description" content="全自适应下载界面">
+    <meta name="keywords" content="自适应, 响应式设计, 图标布局">
+    <title>下载界面</title>
     <style>
-        /* 1. 核心修改：禁止页面滚动 + 背景图自适应屏幕 */
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
+        /* 基础样式重置与全局设置 */
+        * {
             margin: 0;
             padding: 0;
-            /* 背景图自适应设置 */
-            background-image: url('tu/2.png');
-            background-size: cover; /* 保持图片比例，覆盖整个容器 */
-            background-position: center; /* 背景图居中显示，确保关键内容可见 */
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            height: 100vh; /* 确保 body 占满屏幕高度 */
-            width: 100vw; /* 确保 body 占满屏幕宽度 */
-            position: relative;
             box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
             overflow: hidden; /* 禁止页面滚动 */
         }
 
-        /* 图标容器样式 - 底部上方20%位置横向分布 */
+        body {
+            font-family: Arial, sans-serif;
+            position: relative;
+            /* 背景自适应设置 */
+            background-image: url('tu/2.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* 右上角链接容器 - 完全响应式 */
+        .top-links {
+            position: absolute;
+            top: 3vw; /* 使用视窗宽度作为单位，随屏幕缩放 */
+            right: 3vw;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5vw; /* 间距随屏幕缩放 */
+            max-width: 40%;
+            width: 30vw; /* 宽度使用视窗单位 */
+        }
+
+        /* 底部图标容器 - 固定横排并自适应 */
         .icons-container {
             position: absolute;
-            bottom: 25%; /* 底部上方25%的位置 */
+            bottom: 30vh; /* 使用视窗高度作为单位 */
             left: 0;
             right: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: clamp(10px, 5vw, 30px); /* 间距随屏幕宽度自适应 */
-            padding: 0 clamp(10px, 5vw, 30px);
-            box-sizing: border-box;
+            gap: clamp(10px, 3vw, 20px); /* 动态间距，确保不拥挤 */
+            padding: 0 3vw; /* 左右内边距随屏幕缩放 */
+            width: 100%; /* 确保容器占满宽度 */
+            white-space: nowrap; /* 防止换行 */
         }
 
         .icons-container a {
             text-decoration: none;
-            flex: 1;
-            max-width: 30%; /* 每个图标最大占容器30%宽度，避免过大 */
-            display: flex;
-            justify-content: center;
+            flex: 0 1 auto; /* 保持元素灵活性但不强制拉伸 */
+            display: inline-block; /* 确保横向排列 */
+            width: 28%; /* 每个图标约占总宽度的28%，留有余地 */
+            max-width: 180px; /* 最大宽度限制 */
+            min-width: 60px; /* 最小宽度限制 */
         }
 
         .icons-container img {
             width: 100%;
-            max-width: 180px; /* 图标最大宽度限制 */
-            min-width: 60px; /* 图标最小宽度限制，避免过小 */
             height: auto;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -61,26 +78,16 @@
 
         .icons-container img:hover {
             opacity: 0.7;
-            transform: scale(1.1); /* 悬停放大效果 */
+            transform: scale(1.1);
         }
 
-        /* 右上角链接容器 */
-        .top-links {
-            position: absolute;
-            top: 3%;
-            right: 3%;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            max-width: 40%;
-        }
-
-        /* 右下角链接样式 */
+        /* 右下角客服链接 - 自适应位置和大小 */
         .bottom-link {
             position: absolute;
-            bottom: 8%;
-            right: 5%;
-            animation: float 2s ease-in-out infinite; /* 浮动动画 */
+            bottom: 5vh; /* 使用视窗高度作为单位 */
+            right: 5vw; /* 使用视窗宽度作为单位 */
+            animation: float 2s ease-in-out infinite;
+            width: clamp(80px, 15vw, 150px); /* 宽度动态变化 */
         }
 
         /* 图片链接通用样式 */
@@ -96,7 +103,6 @@
             border-radius: 8px;
         }
 
-        /* 悬停效果 */
         .image-link:hover {
             transform: scale(1.05);
             filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
@@ -112,27 +118,31 @@
             }
         }
 
-        /* 手机端适配 */
+        /* 小屏幕适配 */
         @media (max-width: 768px) {
             .top-links {
-                gap: 10px;
                 max-width: 60%;
+                width: 40vw;
             }
-            .bottom-link {
-                bottom: 5%;
-                right: 5%;
+            
+            .icons-container {
+                bottom: 25vh; /* 小屏幕调整位置 */
+                gap: 2vw;
             }
-            .bottom-link img {
-                width: 100px !important;
+            
+            .icons-container a {
+                width: 30%; /* 小屏幕增加宽度占比 */
             }
         }
 
+        /* 大屏幕适配 */
         @media (min-width: 1200px) {
             .top-links {
-                gap: 20px;
+                gap: 2vw;
             }
-            .image-link img {
-                min-width: 100px;
+            
+            .bottom-link {
+                width: 150px;
             }
         }
     </style>
@@ -146,7 +156,7 @@
         <!-- <a href="xxx.html" class="image-link"><img src="tu/xxx.png" alt="链接2"></a> -->
     </div>
 
-    <!-- 底部图标容器 -->
+    <!-- 底部图标容器 - 固定横排 -->
     <div class="icons-container">
         <a href="https://www.bv010.com/">
             <img src="tu/3.jpg" alt="图标1">
@@ -161,7 +171,8 @@
 
     <!-- 右下角客服链接 -->
     <a href="kf1.html" class="image-link bottom-link" target="_blank">
-        <img src="./tu/kefu.png" alt="在线客服！" style="width: 150px;">
+        <img src="./tu/kefu.png" alt="在线客服！">
     </a>
 </body>
 </html>
+    

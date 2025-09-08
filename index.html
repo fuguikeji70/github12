@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="全自适应下载界面">
-    <meta name="keywords" content="自适应, 响应式设计, 图标布局">
+    <meta name="description" content="可滚动的下载界面">
+    <meta name="keywords" content="自适应, 可滚动, 图标布局">
     <title>下载界面</title>
     <style>
         /* 基础样式重置与全局设置 */
@@ -18,7 +18,7 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden; /* 禁止页面滚动 */
+            /* 已删除：overflow: hidden; 这个属性是禁止滚动的关键 */
         }
 
         body {
@@ -32,40 +32,39 @@
             background-attachment: fixed;
         }
 
-        /* 右上角链接容器 - 完全响应式 */
+        /* 其他样式保持不变... */
         .top-links {
             position: absolute;
-            top: 3vw; /* 使用视窗宽度作为单位，随屏幕缩放 */
+            top: 3vw;
             right: 3vw;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.5vw; /* 间距随屏幕缩放 */
+            gap: 1.5vw;
             max-width: 40%;
-            width: 30vw; /* 宽度使用视窗单位 */
+            width: 30vw;
         }
 
-        /* 底部图标容器 - 固定横排并自适应 */
         .icons-container {
             position: absolute;
-            bottom: 30vh; /* 使用视窗高度作为单位 */
+            bottom: 30vh;
             left: 0;
             right: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: clamp(10px, 3vw, 20px); /* 动态间距，确保不拥挤 */
-            padding: 0 3vw; /* 左右内边距随屏幕缩放 */
-            width: 100%; /* 确保容器占满宽度 */
-            white-space: nowrap; /* 防止换行 */
+            gap: clamp(10px, 3vw, 20px);
+            padding: 0 3vw;
+            width: 100%;
+            white-space: nowrap;
         }
 
         .icons-container a {
             text-decoration: none;
-            flex: 0 1 auto; /* 保持元素灵活性但不强制拉伸 */
-            display: inline-block; /* 确保横向排列 */
-            width: 28%; /* 每个图标约占总宽度的28%，留有余地 */
-            max-width: 180px; /* 最大宽度限制 */
-            min-width: 60px; /* 最小宽度限制 */
+            flex: 0 1 auto;
+            display: inline-block;
+            width: 28%;
+            max-width: 180px;
+            min-width: 60px;
         }
 
         .icons-container img {
@@ -81,16 +80,14 @@
             transform: scale(1.1);
         }
 
-        /* 右下角客服链接 - 自适应位置和大小 */
         .bottom-link {
             position: absolute;
-            bottom: 5vh; /* 使用视窗高度作为单位 */
-            right: 5vw; /* 使用视窗宽度作为单位 */
+            bottom: 5vh;
+            right: 5vw;
             animation: float 2s ease-in-out infinite;
-            width: clamp(80px, 15vw, 150px); /* 宽度动态变化 */
+            width: clamp(80px, 15vw, 150px);
         }
 
-        /* 图片链接通用样式 */
         .image-link {
             display: block;
             transition: all 0.3s ease;
@@ -108,7 +105,6 @@
             filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
         }
 
-        /* 浮动动画 */
         @keyframes float {
             0%, 100% {
                 transform: translateY(0);
@@ -118,7 +114,6 @@
             }
         }
 
-        /* 小屏幕适配 */
         @media (max-width: 768px) {
             .top-links {
                 max-width: 60%;
@@ -126,16 +121,15 @@
             }
             
             .icons-container {
-                bottom: 25vh; /* 小屏幕调整位置 */
+                bottom: 23vh;
                 gap: 2vw;
             }
             
             .icons-container a {
-                width: 30%; /* 小屏幕增加宽度占比 */
+                width: 30%;
             }
         }
 
-        /* 大屏幕适配 */
         @media (min-width: 1200px) {
             .top-links {
                 gap: 2vw;
@@ -149,14 +143,10 @@
 </head>
 
 <body>
-    <!-- 右上角链接容器 -->
     <div class="top-links">
         <!-- 可添加链接 -->
-        <!-- <a href="xxx.html" class="image-link"><img src="tu/xxx.png" alt="链接1"></a> -->
-        <!-- <a href="xxx.html" class="image-link"><img src="tu/xxx.png" alt="链接2"></a> -->
     </div>
 
-    <!-- 底部图标容器 - 固定横排 -->
     <div class="icons-container">
         <a href="https://www.bv010.com/">
             <img src="tu/3.jpg" alt="图标1">
@@ -169,10 +159,8 @@
         </a>
     </div>
 
-    <!-- 右下角客服链接 -->
     <a href="kf1.html" class="image-link bottom-link" target="_blank">
         <img src="./tu/kefu.png" alt="在线客服！">
     </a>
 </body>
 </html>
-    

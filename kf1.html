@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客服</title>
+    <style>
+        /* 基础重置与全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", "Roboto", sans-serif;
+        }
+
+        /* 页面容器：科技感背景 */
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* 背景装饰元素 */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(56, 189, 248, 0.1);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+            filter: blur(80px);
+            animation: pulse 8s infinite ease-in-out;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50%;
+            bottom: -50px;
+            left: -50px;
+            filter: blur(80px);
+            animation: pulse 10s infinite ease-in-out 2s;
+        }
+
+        /* 动画效果：脉冲 */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* 动画效果：悬浮 */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* 动画效果：渐变显示 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 主容器 */
+        .main-container {
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            z-index: 10;
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* 提示文字样式 - 放大字体 */
+        .prompt-text {
+            color: #e2e8f0;
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(30, 41, 59, 0.3);
+            border-radius: 10px;
+            line-height: 1.8;
+            font-size: 22px; /* 放大标题字体 */
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+            animation: float 6s infinite ease-in-out;
+        }
+
+        /* 按钮容器：竖向排列 + 间距控制 */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* 按钮样式：无框设计 + 科技感 */
+        .action-button {
+            padding: 20px 24px;
+            background: rgba(30, 41, 59, 0.5);
+            border: none; /* 去掉边框 */
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #e2e8f0;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        /* 按钮发光效果 */
+        .action-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        /* 按钮底部光效 */
+        .action-button::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: bottom center;
+        }
+
+        /* 按钮 hover 状态 - 丰富动作效果 */
+        .action-button:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-button:hover::before {
+            left: 100%;
+        }
+
+        .action-button:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* 按钮点击状态 */
+        .action-button:active {
+            transform: translateY(-2px) scale(1);
+            box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 按钮图标 */
+        .action-button i {
+            margin-right: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .action-button:hover i {
+            transform: rotate(10deg) scale(1.2);
+        }
+
+        /* 不同按钮的特色光效 */
+        .button-1::after {
+            background: #38bdf8;
+        }
+
+        .button-1:hover {
+            color: #38bdf8;
+        }
+
+        .button-2::after {
+            background: #8b5cf6;
+        }
+
+        .button-2:hover {
+            color: #8b5cf6;
+        }
+
+        .button-3::after {
+            background: #10b981;
+        }
+
+        .button-3:hover {
+            color: #10b981;
+        }
+
+        /* 为每个按钮添加延迟动画 */
+        .button-1 {
+            animation: fadeIn 0.8s ease-out 0.2s forwards;
+            opacity: 0;
+        }
+
+        .button-2 {
+            animation: fadeIn 0.8s ease-out 0.4s forwards;
+            opacity: 0;
+        }
+
+        .button-3 {
+            animation: fadeIn 0.8s ease-out 0.6s forwards;
+            opacity: 0;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 480px) {
+            .prompt-text {
+                font-size: 18px;
+                margin-bottom: 30px;
+                padding: 15px;
+            }
+            
+            .action-button {
+                padding: 18px 20px;
+                font-size: 17px;
+            }
+        }
+    </style>
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 主容器 -->
+    <div class="main-container">
+        <!-- 提示文字（大字体） -->
+        <div class="prompt-text">
+            请正确选择您要联系的客服！<br>
+            
+        </div>
+        
+        <!-- 按钮容器：竖向排列核心 -->
+        <div class="button-container">
+            <!-- 按钮1 -->
+            <a href="https://tawk.to/chat/68beb3ad5063d21925feb9be/1j4kero91" class="action-button button-1" target="_blank">
+                <i class="fas fa-headphones"></i>永乐客服：小永
+            </a>
+            <!-- 按钮2 -->
+            <a href="" class="action-button button-2" target="_blank">
+                <i class="fas fa-headphones"></i>永乐客服：小乐
+            </a>
+            <!-- 按钮3 -->
+            <a href="" class="action-button button-3" target="_blank">
+                <i class="fas fa-headphones"></i>永乐客服：小美
+                
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+    

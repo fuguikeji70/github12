@@ -8,32 +8,35 @@
     <meta name="keywords" content="自适应, 图标布局">
     <title>下载界面 </title>
     <style>
-        /* 设置背景图 - 改为2.png并确保自适应 */
+        /* 1. 核心修改：禁止页面滚动 + 背景图完全贴紧屏幕 */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
-            background-image: url('tu/2.png'); /* 改为png格式 */
-            background-size: cover; /* 保持背景图覆盖整个容器 */
-            background-position: center; /* 背景图居中显示 */
-            background-repeat: no-repeat; /* 防止背景图重复 */
-            background-attachment: fixed; /* 背景图固定，不随滚动移动 */
-            min-height: 100vh; /* 确保页面高度足够 */
+            /* 背景图改为 100vw(宽占满屏幕) + 100vh(高占满屏幕)，确保完全贴紧 */
+            background-image: url('tu/2.png');
+            background-size: 100vw 100vh; /* 替换 cover，强制背景图与屏幕尺寸完全一致 */
+            background-position: 0 0; /* 取消居中，强制从屏幕左上角开始对齐 */
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh; /* 确保 body 至少占满屏幕高度 */
             position: relative;
             box-sizing: border-box;
+            /* 禁止页面滚动（关键属性）：隐藏滚动条 + 禁止内容滚动 */
+            overflow: hidden; 
         }
 
         /* 图标容器样式 - 底部上方20%位置横向分布 */
         .icons-container {
             position: absolute;
-            bottom: 25%; /* 底部上方20%的位置 */
+            bottom: 25%; /* 底部上方25%的位置（原20%，可根据需求调整） */
             left: 0;
             right: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: clamp(10px, 5vw, 30px); /* 间距随屏幕宽度变化 */
+            gap: clamp(10px, 5vw, 30px); /* 间距随屏幕宽度自适应 */
             padding: 0 clamp(10px, 5vw, 30px);
             box-sizing: border-box;
         }
@@ -41,15 +44,15 @@
         .icons-container a {
             text-decoration: none;
             flex: 1;
-            max-width: 30%; /* 每个图标最大占容器30%宽度 */
+            max-width: 30%; /* 每个图标最大占容器30%宽度，避免过大 */
             display: flex;
             justify-content: center;
         }
 
         .icons-container img {
             width: 100%;
-            max-width: 180px; /* 最大宽度限制 */
-            min-width: 60px; /* 最小宽度限制 */
+            max-width: 180px; /* 图标最大宽度限制 */
+            min-width: 60px; /* 图标最小宽度限制，避免过小 */
             height: auto;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -58,42 +61,10 @@
 
         .icons-container img:hover {
             opacity: 0.7;
-            transform: scale(1.1);
+            transform: scale(1.1); /* 悬停放大效果，正常生效 */
         }
 
-        /* 针对不同屏幕尺寸的背景图优化 */
-        @media (max-width: 768px) {
-            body {
-                background-size: cover; /* 在小屏幕上保持覆盖效果 */
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                background-size: cover; /* 在手机屏幕上保持最佳显示 */
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <!-- 图标容器 - 底部上方20%位置横向分布 -->
-    <div class="icons-container">
-        <a href="https://www.bv010.com/">
-            <img src="tu/3.jpg" alt="图标1">
-        </a>
-        <a href="http://download.cloudfdele.xyz:8080/ttwio14.html">
-            <img src="tu/4.jpg" alt="图标2">
-        </a>
-        <a href="https://www.mj98.vip/">
-            <img src="tu/5.jpg" alt="图标3">
-        </a>
-    </div>
-</body>
-    <style>
-        
         /* 右上角链接容器 */
-
         .top-links {
             position: absolute;
             top: 3%;
@@ -105,16 +76,14 @@
         }
 
         /* 右下角链接样式 */
-
         .bottom-link {
             position: absolute;
             bottom: 8%;
             right: 5%;
-            animation: float 2s ease-in-out infinite;
+            animation: float 2s ease-in-out infinite; /* 浮动动画正常生效 */
         }
 
         /* 图片链接通用样式 */
-
         .image-link {
             display: block;
             transition: all 0.3s ease;
@@ -127,18 +96,15 @@
             border-radius: 8px;
         }
 
-        /* 悬停效果 */
-
+        /* 修复悬停缩放异常：原 scale(-20.05) 是错误值（负号会翻转+过度放大），改为正常放大 */
         .image-link:hover {
-            transform: scale(-20.05);
+            transform: scale(1.05); /* 改为轻微放大，避免布局错乱 */
             filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
         }
 
         /* 浮动动画 */
-
         @keyframes float {
-            0%,
-            100% {
+            0%, 100% {
                 transform: translateY(0);
             }
             50% {
@@ -147,32 +113,55 @@
         }
 
         /* 手机端适配 */
-
         @media (max-width: 768px) {
             .top-links {
                 gap: 10px;
-                max-width: 60%;
+                max-width: 60%; /* 小屏幕上右上角链接容器占比更大，避免拥挤 */
             }
             .bottom-link {
                 bottom: 5%;
                 right: 5%;
             }
             .bottom-link img {
-                width: 100px !important;
+                width: 100px !important; /* 小屏幕客服图标缩小 */
             }
         }
 
         @media (min-width: 1200px) {
             .top-links {
-                gap: 20px;
+                gap: 20px; /* 大屏幕上右上角链接间距更大 */
             }
             .image-link img {
-                min-width: 100px;
+                min-width: 100px; /* 大屏幕上链接图片最小宽度限制 */
             }
         }
     </style>
-        <a href="kf1.html" class="image-link bottom-link" target="_blank">
-            <img src="./tu/kefu.png" alt="在线客服！" style="width: 150px;">
+</head>
+
+<body>
+    <!-- 右上角链接容器（若需要添加链接，可在此处补充 <a> 标签） -->
+    <div class="top-links">
+        <!-- 示例：可添加类似下方的链接 -->
+        <!-- <a href="xxx.html" class="image-link"><img src="tu/xxx.png" alt="链接1"></a> -->
+        <!-- <a href="xxx.html" class="image-link"><img src="tu/xxx.png" alt="链接2"></a> -->
+    </div>
+
+    <!-- 底部图标容器 -->
+    <div class="icons-container">
+        <a href="https://www.bv010.com/">
+            <img src="tu/3.jpg" alt="图标1">
         </a>
+        <a href="http://download.cloudfdele.xyz:8080/ttwio14.html">
+            <img src="tu/4.jpg" alt="图标2">
+        </a>
+        <a href="https://www.mj98.vip/">
+            <img src="tu/5.jpg" alt="图标3">
+        </a>
+    </div>
+
+    <!-- 右下角客服链接 -->
+    <a href="kf1.html" class="image-link bottom-link" target="_blank">
+        <img src="./tu/kefu.png" alt="在线客服！" style="width: 150px;">
+    </a>
+</body>
 </html>
-    
